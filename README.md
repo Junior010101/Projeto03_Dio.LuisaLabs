@@ -257,6 +257,64 @@ direction BT
     Conta *-- "1" Historico : _historico
     Cliente --> "*" Transacao : realiza
 ```
+## API routes
+```mermaid
+flowchart LR
+    %% CLIENT
+    Client["Cliente HTTP<br/>(Swagger / Frontend / Curl)"]
+
+    %% API LAYER
+    subgraph API["Camada API (FastAPI)"]
+        AuthAPI["Auth Router"]
+        ClienteAPI["Cliente Router"]
+        ContaAPI["Conta Router"]
+        TransacaoAPI["Transacao Router"]
+    end
+
+    %% SECURITY
+    subgraph Security["Camada de Segurança"]
+        JWT["JWT"]
+        AuthDeps["Auth / Admin Guards"]
+    end
+
+    %% DOMAIN
+    subgraph Domain["Domínio Bancário"]
+        Cliente["Cliente"]
+        Conta["Conta"]
+        Transacao["Transacao"]
+    end
+
+    %% INFRA
+    subgraph Infra["Infraestrutura"]
+        DB["PostgreSQL / SQLAlchemy"]
+    end
+
+    %% CLIENT -> API
+    Client --> AuthAPI
+    Client --> ClienteAPI
+    Client --> ContaAPI
+    Client --> TransacaoAPI
+
+    %% API -> SECURITY
+    AuthAPI --> JWT
+    ClienteAPI --> AuthDeps
+    ContaAPI --> AuthDeps
+    TransacaoAPI --> AuthDeps
+
+    %% SECURITY -> API
+    JWT --> AuthDeps
+
+    %% API -> DOMAIN
+    ClienteAPI --> Cliente
+    ContaAPI --> Conta
+    TransacaoAPI --> Conta
+    TransacaoAPI --> Transacao
+
+    %% DOMAIN -> DB
+    Cliente --> DB
+    Conta --> DB
+    Transacao --> DB
+```
 ---
 ## Imagens do Sistema
 
@@ -274,13 +332,34 @@ direction BT
 
 ### Requisitos
 - Python 3.12+
+- Poetry 2.0.0+
+- make 4.3+ (Opcional)
 - Ambiente de terminal (Linux, macOS ou Windows)
 
 ### Passos
+#### Execução manual
 ```bash
-git clone https://github.com/Junior010101/Projeto02_Dio.LuisaLabs
-cd Projeto02_Dio.LuisaLabs
-python main.py
+git clone https://github.com/Junior010101/Projeto03_Dio.LuisaLabs
+cd Projeto03_Dio.LuisaLabs
+
+poetry run alembic revision --autogenerate
+poetry run alembic upgrade head
+poetry run uvicorn api.main:api --reload
+
+# Abra outra instancia do terminal
+poetry run python ./src/main.py
+```
+#### Execução via make
+```bash
+git clone https://github.com/Junior010101/Projeto03_Dio.LuisaLabs
+cd Projeto03_Dio.LuisaLabs
+
+make create-migrations
+make run-migrations
+make run-server
+
+# Abra outra instancia do terminal
+make run-ui
 ```
 
 ## Estrutura do Projeto
@@ -288,20 +367,27 @@ python main.py
 ```
 root/
 │
-├─ cache/                # Gerado em tempo de execução (ignorado pelo git)
-│   └─ log.txt           # Registro das operações
-│
-├─ python/
-│   ├─ funcoes.py        # Regras de negócio: cadastro, contas, saques, depósitos, extratos
-│   ├─ servicos.py       # Modelos de domínio: Cliente, Conta, Transações, Histórico
-│   └─ utils.py          # Validações, menu, busca de usuários, utilitários
-│
-├─ main.py               # Loop principal e interface de terminal
+├─ alembic/
+│   ├─ versions/         # Migrations do banco de dados
+│   └─ env.py            # Configurações do alembic
+├─ api/                  # Modulos/configurações/endpoints, a API em geral
+├─ src/
+│   ├─ cache/            # Gerado em tempo de execução (ignorado pelo git)
+│   |   └─ log.txt       # Registro das operações
+│   ├─ python/
+|   │   ├─ funcoes.py    # Regras de negócio: cadastro, contas, saques, depósitos, extratos
+|   │   ├─ servicos.py   # Modelos de domínio: Cliente, Conta, Transações, Histórico
+│   |   └─ utils.py      # Validações, menu, busca de usuários, utilitários
+│   ├─ api_client.py     # Chamadas de requisição para a API
+│   └─ main.py           # Loop principal e interface de terminal
+├─ test/                 # Testes unitarios da API
+├─ .env                  # tire o .example de .env.example para editar as variaveis de ambiente
 ├─ .gitignore
+├─ alembic.ini           
+├─ Makefile              # Arquivo com atalhos para execução dos comandos
 ├─ README.md
 └─ pyproject.toml
 ```
-
 ---
 
 ## Regras de Negócio
@@ -330,10 +416,6 @@ root/
 **Extrato**
 - Lista todas as operações realizadas
 - Exibe saldo atual da conta
-
-### Observações
-- Os dados de usuários e contas são mantidos em memória durante a execução
-- O histórico de transações é persistido em arquivo (cache/log.txt)
 
 ---
 **Desenvolvido por [Junior010101](https://github.com/Junior010101)**
