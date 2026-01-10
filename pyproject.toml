@@ -1,0 +1,33 @@
+[project]
+name = "projeto03-dio"
+version = "0.3.0"
+description = "Evolução do Projeto02_Dio.LuisaLabs, este sistema bancário em Python rodando no terminal permite criar usuários, validar CPF e datas, registrar contas correntes, fazer depósitos e saques, acompanhar extratos detalhados e rastrear transações, oferecendo uma experiência completa de gestão financeira. Agora com uma API Bancária integrada a um banco de dados relacional, permitindo a persistência de dados nessa aplicação."
+authors = [
+    {name = "junior010101",email = "marcondesjunior2209@gmail.com"}
+]
+license = {text = "MIT License"}
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic (>=1.17.2,<2.0.0)",
+    "pydantic-settings (>=2.12.0,<3.0.0)",
+    "fastapi (>=0.128.0,<0.129.0)",
+    "uvicorn (>=0.40.0,<0.41.0)",
+    "pyjwt[cripto] (>=2.10.1,<3.0.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "aiosqlite (>=0.22.1,<0.23.0)",
+    "pytest-asyncio (>=1.3.0,<2.0.0)",
+    "pytest-mock (>=3.15.1,<4.0.0)",
+    "httpx (>=0.28.1,<0.29.0)"
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

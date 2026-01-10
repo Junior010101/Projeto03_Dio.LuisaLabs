@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite
+
+.pytest_cache/
+
+cache/
+log.txt
+.env
+
+.vscode/
+launch.json
+settings.json

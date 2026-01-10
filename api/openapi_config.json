@@ -1,0 +1,29 @@
+{
+    "tags_metadata": 
+    [
+        {
+            "name": "cliente",
+            "description": "Operações envolvendo o usuário."
+        },
+        {
+            "name": "auth",
+            "description": "Endpoint para autenticação de usuários e controle de acesso."
+        },
+        {
+            "name": "conta",
+            "description": "Operações relacionadas às contas do usuário."
+        },
+        {
+            "name": "transação",
+            "description": "Operações envolvendo a consulta de dados e ações financeiras."
+        }
+    ],
+    "servers": 
+    [
+        {
+            "url": "http://localhost:8000/",
+            "description": "Ambiente de desenvolvimento"
+        }
+    ],
+    "description": "## Regras de Negócio\n\n### Clientes\n* **CPF único por usuário**\n* **Data de nascimento validada** `(AAAA-MM-DD)`\n* **Um usuário pode possuir múltiplas contas**\n\n### Contas\n* **Conta vinculada a um usuário já cadastrado**\n* **Número da conta gerado automaticamente**\n* **Uma conta possui apenas um usuário**\n\n### Transações\n* **Transação vinculada a uma conta cadastrada**\n* **Uma conta pode possuir varias transações**"
+}
