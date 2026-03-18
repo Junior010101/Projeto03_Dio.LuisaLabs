@@ -365,28 +365,94 @@ make run-ui
 ## Estrutura do Projeto
 
 ```
-root/
-│
-├─ alembic/
-│   ├─ versions/         # Migrations do banco de dados
-│   └─ env.py            # Configurações do alembic
-├─ api/                  # Modulos/configurações/endpoints, a API em geral
-├─ src/
-│   ├─ cache/            # Gerado em tempo de execução (ignorado pelo git)
-│   |   └─ log.txt       # Registro das operações
-│   ├─ python/
-|   │   ├─ funcoes.py    # Regras de negócio: cadastro, contas, saques, depósitos, extratos
-|   │   ├─ servicos.py   # Modelos de domínio: Cliente, Conta, Transações, Histórico
-│   |   └─ utils.py      # Validações, menu, busca de usuários, utilitários
-│   ├─ api_client.py     # Chamadas de requisição para a API
-│   └─ main.py           # Loop principal e interface de terminal
-├─ test/                 # Testes unitarios da API
-├─ .env                  # tire o .example de .env.example para editar as variaveis de ambiente
-├─ .gitignore
-├─ alembic.ini           
-├─ Makefile              # Arquivo com atalhos para execução dos comandos
-├─ README.md
-└─ pyproject.toml
+├── 📁 alembic
+│   ├── 📁 versions
+│   │   └── 🐍 3120831262a6_.py
+│   ├── 📄 README
+│   ├── 🐍 env.py
+│   └── 📄 script.py.mako
+├── 📁 api
+│   ├── 📁 controllers
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 auth.py
+│   │   ├── 🐍 cliente.py
+│   │   ├── 🐍 conta.py
+│   │   └── 🐍 transacao.py
+│   ├── 📁 errors
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 domain_exceptions.py
+│   │   └── 🐍 validation_errors.py
+│   ├── 📁 models
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 cliente.py
+│   │   ├── 🐍 conta.py
+│   │   └── 🐍 transacao.py
+│   ├── 📁 schemas
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 auth.py
+│   │   ├── 🐍 cliente.py
+│   │   ├── 🐍 conta.py
+│   │   └── 🐍 transacao.py
+│   ├── 📁 views
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 auth.py
+│   │   ├── 🐍 cliente.py
+│   │   ├── 🐍 conta.py
+│   │   └── 🐍 transacao.py
+│   ├── 🐍 __init__.py
+│   ├── 🐍 config.py
+│   ├── 🐍 db.py
+│   ├── 🐍 main.py
+│   ├── ⚙️ openapi_config.json
+│   └── 🐍 security.py
+├── 📁 repo
+│   ├── 🖼️ acessar_conta.png
+│   ├── 🖼️ contas.png
+│   ├── 🖼️ extrato.png
+│   ├── 🖼️ menu_default.png
+│   ├── 🖼️ menu_logado.png
+│   └── 🖼️ transacao.png
+├── 📁 src
+│   ├── 📁 python
+│   │   ├── 🐍 __init__.py
+│   │   ├── 🐍 funcoes.py
+│   │   ├── 🐍 servicos.py
+│   │   └── 🐍 utils.py
+│   ├── 🐍 __init__.py
+│   ├── 🐍 client.py
+│   └── 🐍 main.py
+├── 📁 tests
+│   ├── 📁 integration
+│   │   └── 📁 controllers
+│   │       ├── 📁 auth
+│   │       │   ├── 🐍 __init__.py
+│   │       │   └── 🐍 test_login.py
+│   │       ├── 📁 cliente
+│   │       │   ├── 🐍 __init__.py
+│   │       │   ├── 🐍 test_atualizar_cliente.py
+│   │       │   ├── 🐍 test_buscar_pelo_cpf.py
+│   │       │   ├── 🐍 test_cadastrar_cliente.py
+│   │       │   ├── 🐍 test_deletar_cliente.py
+│   │       │   └── 🐍 test_listar_clientes.py
+│   │       ├── 📁 conta
+│   │       │   ├── 🐍 __init__.py
+│   │       │   ├── 🐍 test_atualizar_conta.py
+│   │       │   ├── 🐍 test_buscar_pelo_id.py
+│   │       │   ├── 🐍 test_criar_conta_bancaria.py
+│   │       │   ├── 🐍 test_deletar_conta.py
+│   │       │   └── 🐍 test_listar_contas.py
+│   │       └── 📁 transacao
+│   │           ├── 🐍 test_mostrar_extrato.py
+│   │           └── 🐍 test_realizar_transacao.py
+│   ├── 🐍 __init__.py
+│   └── 🐍 conftest.py
+├── ⚙️ .env.example
+├── ⚙️ .gitignore
+├── 📄 Makefile
+├── 📝 README.md
+├── ⚙️ alembic.ini
+├── 📄 poetry.lock
+└── ⚙️ pyproject.toml
 ```
 ---
 

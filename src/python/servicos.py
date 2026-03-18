@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from datetime import datetime as date
 
-from api_client import request_get, request_post
 from python.utils import buscar_log, salvar_log
+from src.client import request_get, request_post
 
 
 class Cliente:

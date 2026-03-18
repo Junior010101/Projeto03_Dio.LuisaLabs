@@ -1,7 +1,6 @@
 from datetime import datetime as date
 from functools import wraps
 
-from api_client import request_get, request_post
 from python.servicos import ContaCorrente, Deposito, PessoaFisica, Saque
 from python.utils import (
     buscar_log,
@@ -10,6 +9,7 @@ from python.utils import (
     validar_cpf,
     validar_data_nascimento,
 )
+from src.client import request_get, request_post
 
 
 def registrar_log():
