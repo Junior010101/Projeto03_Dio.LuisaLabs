@@ -286,7 +286,7 @@ flowchart LR
 
     %% INFRA
     subgraph Infra["Infraestrutura"]
-        DB["PostgreSQL / SQLAlchemy"]
+        DB["PostgreSQL / Sqlite"]
     end
 
     %% CLIENT -> API
